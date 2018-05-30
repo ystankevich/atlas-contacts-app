@@ -55,13 +55,11 @@ test: fmt
 
 .PHONY: server-docker
 server-docker:
-	@docker build -f $(SERVER_DOCKERFILE) -t $(SERVER_IMAGE):$(IMAGE_VERSION) .
-	@docker tag $(SERVER_IMAGE):$(IMAGE_VERSION) $(SERVER_IMAGE):latest
+	@docker build -f $(SERVER_DOCKERFILE) -t $(SERVER_IMAGE):$(IMAGE_VERSION) -t $(SERVER_IMAGE):latest .
 
 .PHONY: gateway-docker
 gateway-docker:
-	@docker build -f $(GATEWAY_DOCKERFILE) -t $(GATEWAY_IMAGE):$(IMAGE_VERSION) .
-	@docker tag $(GATEWAY_IMAGE):$(IMAGE_VERSION) $(GATEWAY_IMAGE):latest
+	@docker build -f $(GATEWAY_DOCKERFILE) -t $(GATEWAY_IMAGE):$(IMAGE_VERSION)  -t $(GATEWAY_IMAGE):latest .
 
 .PHONY: push
 push:
