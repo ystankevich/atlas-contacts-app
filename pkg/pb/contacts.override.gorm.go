@@ -3,6 +3,7 @@ package pb
 import (
 	"fmt"
 
+	auth "github.com/infobloxopen/atlas-app-toolkit/auth"
 	"github.com/infobloxopen/atlas-app-toolkit/rpc/errdetails"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/net/context"
@@ -19,7 +20,12 @@ func (m *Contact) BeforeToORM(ctx context.Context, c *ContactORM) error {
 				return nil
 			}
 		}
-		c.Emails = append(c.Emails, &EmailORM{Address: m.PrimaryEmail, IsPrimary: true})
+		accountID, err := auth.GetAccountID(ctx, nil)
+		if err != nil {
+			return err
+		}
+
+		c.Emails = append(c.Emails, &EmailORM{Address: m.PrimaryEmail, IsPrimary: true, AccountID: accountID})
 	}
 	return nil
 }
